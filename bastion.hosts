@@ -292,8 +292,8 @@ openshift_master_htpasswd_file=/root/htpasswd.openshift
 # or to one or all of the masters defined in the inventory if no load
 # balancer is present.
 openshift_master_cluster_method=native
-openshift_master_cluster_hostname=loadbalancer1.a3f5.internal
-openshift_master_cluster_public_hostname=loadbalancer.a3f5.example.opentlc.com
+openshift_master_cluster_hostname=loadbalancer1.example.com
+openshift_master_cluster_public_hostname=loadbalancer1-a3f5.oslab.opentlc.com
 
 # Pacemaker high availability cluster method.
 # Pacemaker HA environment must be able to self provision the
