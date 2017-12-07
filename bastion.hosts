@@ -19,7 +19,8 @@ timeout=60
 openshift_logging_install_logging=true
 
 # disable memory check, as we are not a production environment
-openshift_disable_check="memory_availability"
+#openshift_disable_check="memory_availability"
+openshift_disable_check=memory_availability,disk_availability
 
 # Enable unsupported configurations, things that will yield a partially
 # functioning cluster but would not be supported for production use
