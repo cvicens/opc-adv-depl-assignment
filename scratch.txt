@@ -1,0 +1,2 @@
+sudo -E ssh -L 636:idm.example.com:636 -i ./cvicensa-redhat.com.id_rsa  cvicensa-redhat.com@oselab-a3f5.oslab.opentlc.com -N
+
