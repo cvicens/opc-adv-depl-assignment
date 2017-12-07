@@ -708,7 +708,7 @@ os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
 #openshift_pkg_version=-3.1.0.0
 
 # Configure custom ca certificate
-openshift_master_ca_certificate={'certfile': '/etc/ansible/ca.cert.pem', 'keyfile': '/etc/ansible/ca.key.pem'}
+openshift_master_ca_certificate={'certfile': '/root/ca.pem', 'keyfile': '/root/ca-key.pem'}
 #
 # NOTE: CA certificate will not be replaced with existing clusters.
 # This option may only be specified when creating a new cluster or
