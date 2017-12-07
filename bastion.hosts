@@ -967,6 +967,7 @@ master3.example.com openshift_hostname=master3.example.com ansible_ssh_user=root
 ## These are infranodes
 infranode1.example.com openshift_hostname=infranode1.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': 'a3f5', 'env':'infra', 'zone': 'eu-central-1a'}"
 infranode2.example.com openshift_hostname=infranode2.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': 'a3f5', 'env':'infra', 'zone': 'eu-central-1a'}"
+infranode3.example.com openshift_hostname=infranode3.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': 'a3f5', 'env':'infra', 'zone': 'eu-central-1a'}"
 
 ## These are regular nodes
 node1.example.com openshift_hostname=node1.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': 'a3f5', 'env':'app', 'zone': 'eu-central-1a'}"
@@ -977,4 +978,4 @@ node5.example.com openshift_hostname=node5.example.com  ansible_ssh_user=root an
 
 [nfs]
 #support1.a3f5.internal openshift_hostname=support1.a3f5.internal  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa
-node6.example.com openshift_hostname=node5.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': 'a3f5', 'env':'app', 'zone': 'eu-central-1a'}"
+node6.example.com openshift_hostname=node6.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': 'a3f5', 'env':'app', 'zone': 'eu-central-1a'}"
