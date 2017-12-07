@@ -939,7 +939,7 @@ openshift_master_ca_certificate={'certfile': '/root/ca.pem', 'keyfile': '/root/c
 # containerized=true host variable we must set to false.
 [lb]
 #ose3-lb-ansible.test.example.com containerized=false
-loadbalancer1.example.com host_zone=eu-central-1a
+loadbalancer1.example.com host_zone=eu-central-1a lb=lb-1
 
 [masters]
 #ose3-master[1:3]-ansible.test.example.com
