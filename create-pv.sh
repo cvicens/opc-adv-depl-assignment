@@ -1,6 +1,7 @@
 #!/bin/sh
 
 NFS_SERVER=node6.example.com
+NFS_ROOT_PATH=/srv/nfs/user-vols
 
 for i in `seq 1 2`;
 do
@@ -16,7 +17,7 @@ spec:
     - ReadWriteOnce 
   persistentVolumeReclaimPolicy: Recycle
   nfs: 
-    path: /exports/pv$i
+    path: $NFS_ROOT_PATH/pv$i
     server: $NFS_SERVER
     readOnly: false
 EOF
@@ -37,7 +38,7 @@ spec:
     - ReadWriteMany 
   persistentVolumeReclaimPolicy: Retain
   nfs: 
-    path: /exports/pv$i
+    path: $NFS_ROOT_PATH/pv$i
     server: $NFS_SERVER
     readOnly: false
 EOF
