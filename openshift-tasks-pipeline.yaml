@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: cart-pipeline
+spec:
+  strategy:
+    jenkinsPipelineStrategy:
+      jenkinsfile: |-
+        node('maven') {
+          stage('Build') {
+            openshiftBuild(buildConfig: 'taks', showBuildLogs: 'true')
+          }
+          stage('Deploy') {
+            openshiftDeploy(deploymentConfig: 'tasks')
+            openshiftVerifyDeployment(deploymentConfig: "taks", replicaCount: 1, verifyReplicaCount: true)
+          }
+          stage('Test') {
+            sh "curl -i -u 'redhat:redhat1!' -H 'Content-Length: 0' -X POST http://tasks-app:8080/ws/tasks/task1"
+            sh "curl -u 'redhat:redhat1!' -H "Accept: application/json" -X GET http://tasks-app:8080/ws/tasks/1 | grep 'Dummy Product'"
+          }
+        }
+    type: JenkinsPipeline
