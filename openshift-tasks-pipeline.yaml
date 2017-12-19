@@ -8,15 +8,17 @@ spec:
       jenkinsfile: |-
         node('maven') {
           stage('Build') {
-            openshiftBuild(buildConfig: 'taks', showBuildLogs: 'true')
+            openshiftBuild(buildConfig: 'tasks-app', showBuildLogs: 'true')
           }
           stage('Deploy') {
-            openshiftDeploy(deploymentConfig: 'tasks')
-            openshiftVerifyDeployment(deploymentConfig: "taks", replicaCount: 1, verifyReplicaCount: true)
+            openshiftDeploy(deploymentConfig: 'tasks-app')
+            openshiftVerifyDeployment(deploymentConfig: "tasks-app", replicaCount: 1, verifyReplicaCount: true)
           }
-          stage('Test') {
-            sh "curl -i -u 'redhat:redhat1!' -H 'Content-Length: 0' -X POST http://tasks-app:8080/ws/tasks/task1"
-            sh "curl -u 'redhat:redhat1!' -H "Accept: application/json" -X GET http://tasks-app:8080/ws/tasks/1 | grep 'Dummy Product'"
+          // I had to use the exposed route the service name...
+          stage('Verify Service') {
+            openshiftVerifyService(serviceName: 'tasks-app')
+            //sh "curl -i -u 'redhat:redhat1!' -H 'Content-Length: 0' -X POST http://tasks-app-tasks-dev.cloudapps-a3f5.oslab.opentlc.com/ws/tasks/task1"
+            //sh "curl -u 'redhat:redhat1!' -H 'Accept: application/json' -X GET http://tasks-app-tasks-dev.cloudapps-a3f5.oslab.opentlc.com/ws/tasks/1 | grep -e 'id.*1'"
           }
         }
     type: JenkinsPipeline
