@@ -1,0 +1,136 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  creationTimestamp: '2017-12-19T10:42:04Z'
+  name: winepairing-pipeline
+  namespace: coolstore-cicd
+  resourceVersion: '433081'
+  selfLink: /oapi/v1/namespaces/coolstore-cicd/buildconfigs/winepairing-pipeline
+  uid: 410b6743-e4a9-11e7-be2b-2cc2602f8794
+spec:
+  nodeSelector: null
+  output: {}
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    type: None
+  strategy:
+    jenkinsPipelineStrategy:
+      jenkinsfile: |-
+        node('maven') {
+          def nexus = 'http://nexus3-coolstore-infra.cloudapps-a3f5.oslab.opentlc.com'
+          def sonar = 'http://sonarqube-coolstore-infra.cloudapps-a3f5.oslab.opentlc.com'
+          def sonarToken = '2102f74f540892a362f4f7fd986e6dc5c14db5f9'
+          
+          def routeDev = 'http://winepairing-coolstore-dev.cloudapps-a3f5.oslab.opentlc.com'
+          def routeStage = 'http://winepairing-coolstore-stage.cloudapps-a3f5.oslab.opentlc.com'
+          
+          def buildName = 'winepairing'
+          def serviceName = 'winepairing'
+          def deployConfigName = 'winepairing'
+          def imageStream = 'winepairing'
+          
+          def cicdProject = 'coolstore-cicd'
+          def devProject = 'coolstore-dev'
+          def stageProject = 'coolstore-stage'
+                  
+          //def mvnCmd = "mvn"
+          def mvnCmd = "mvn -s ./nexus_openshift_settings.xml"
+          // The following variables need to be defined at the top level and not inside
+          // the scope of a stage - otherwise they would not be accessible from other stages.
+          // Extract version and other properties from the pom.xml
+          //def groupId    = getGroupIdFromPom("pom.xml")
+          //def artifactId = getArtifactIdFromPom("pom.xml")
+          //def version    = getVersionFromPom("pom.xml")
+          
+          stage('Checkout Source') {
+            // Get Source Code from SCM (Git) as configured in the Jenkins Project
+            // Next line for inline script, "checkout scm" for Jenkinsfile from Gogs
+            git 'https://github.com/cvicens/wine-pairing-mock.git'
+            //checkout scm
+          }
+          
+          stage('Build JAR') {
+            echo "${nexus} ${sonar}"
+            echo "Building version"
+            sh "${mvnCmd} clean package -DskipTests"
+          }
+                  
+          stage('Unit Tests') {
+            echo "Unit Tests"
+            sh "${mvnCmd} test"
+          }
+          
+          stage('Code Analysis') {
+            echo "Code Analysis"
+            // Replace xyz-sonarqube with the name of your project
+            //sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube.xyz-sonarqube.svc.cluster.local:9000/ -Dsonar.projectName=${JOB_BASE_NAME}" -Dsonar.login=2102f74f540892a362f4f7fd986e6dc5c14db5f9
+            sh "${mvnCmd} sonar:sonar -Dsonar.host.url=${sonar} -Dsonar.projectName=${JOB_BASE_NAME} -Dsonar.login=${sonarToken}"
+          }
+          
+          stage('Publish to Nexus') {
+            echo "Publish to Nexus"
+            // Replace xyz-nexus with the name of your project
+            sh "${mvnCmd} deploy -DskipTests=true -DaltDeploymentRepository=nexus::default::${nexus}/repository/releases"
+          }
+
+          stage('Build Image') {
+            // Copy the jar file we just built and rename to ROOT.jar
+            sh "cp ./target/wine-pairing*.jar ./ROOT.jar"
+
+            // Start Binary Build in OpenShift using the file we just published
+            sh "oc project ${cicdProject}"
+            sh "oc start-build ${buildName} --follow --from-file=./ROOT.jar -n ${cicdProject}"
+          }
+
+          stage('Approve') {
+            timeout(time:15, unit:'MINUTES') {
+              input message:'Approve Deploy to Dev?'
+            }
+          }
+          
+          stage('Deploy Dev') {
+            def newTag = "dev"
+            echo "New Tag: ${newTag}"
+
+            openshiftTag alias: 'false', destStream: imageStream, destTag: newTag, destinationNamespace: devProject, namespace: cicdProject, srcStream: imageStream, srcTag: 'latest', verbose: 'false'
+            //openshiftVerifyDeployment(deploymentConfig: "winepairing", replicaCount: 1, verifyReplicaCount: true)
+            sleep 10
+          }
+                  
+          stage('Verify Service Dev') {
+            openshiftVerifyDeployment(deploymentConfig: deployConfigName, namespace: devProject, replicaCount: 1, verifyReplicaCount: true)
+            sh "curl -kv ${routeDev}/pairing?foodType=FISH"
+          }
+          
+          stage('Approve') {
+            timeout(time:15, unit:'MINUTES') {
+              input message:'Approve Deploy to Stage?'
+            }
+          }
+          
+          stage('Deploy Stage') {
+            def newTag = "stage"
+            echo "New Tag: ${newTag}"
+
+            openshiftTag alias: 'false', destStream: imageStream, destTag: newTag, destinationNamespace: stageProject, namespace: cicdProject, srcStream: imageStream, srcTag: 'latest', verbose: 'false'
+            //openshiftVerifyDeployment(deploymentConfig: "winepairing", replicaCount: 1, verifyReplicaCount: true)
+            sleep 10
+          }
+                  
+          stage('Verify Service Stage') {
+            openshiftVerifyDeployment(deploymentConfig: deployConfigName, namespace: stageProject, replicaCount: 1, verifyReplicaCount: true)
+            sh "curl -kv ${routeStage}/pairing?foodType=FISH"
+          }
+        }
+    type: JenkinsPipeline
+  triggers:
+    - generic:
+        secret: winepairing0001
+      type: Generic
+    - github:
+        secret: winepairing0002
+      type: GitHub
+status:
+  lastVersion: 21
