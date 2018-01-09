@@ -3,7 +3,7 @@
 NFS_SERVER=node6.example.com
 NFS_ROOT_PATH=/srv/nfs/user-vols
 
-for i in `seq 1 2`;
+for i in `seq 1 50`;
 do
 cat << EOF > ./dyn1-pv-create.yaml
 apiVersion: v1
@@ -24,7 +24,7 @@ EOF
 oc create -f ./dyn1-pv-create.yaml
 done 
 
-for i in `seq 3 4`;
+for i in `seq 51 100`;
 do
 cat << EOF > ./dyn2-pv-create.yaml
 apiVersion: v1
