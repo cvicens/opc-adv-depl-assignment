@@ -294,7 +294,7 @@ openshift_master_htpasswd_file=/root/htpasswd.openshift
 # balancer is present.
 openshift_master_cluster_method=native
 openshift_master_cluster_hostname=loadbalancer1.example.com
-openshift_master_cluster_public_hostname=loadbalancer1-a3f5.oslab.opentlc.com
+openshift_master_cluster_public_hostname=loadbalancer1-579a.oslab.opentlc.com
 
 # Pacemaker high availability cluster method.
 # Pacemaker HA environment must be able to self provision the
@@ -317,7 +317,7 @@ openshift_master_cluster_public_hostname=loadbalancer1-a3f5.oslab.opentlc.com
 #osm_api_server_args={'max-requests-inflight': ['400']}
 
 # default subdomain to use for exposed routes
-openshift_master_default_subdomain=cloudapps-a3f5.oslab.opentlc.com
+openshift_master_default_subdomain=cloudapps-579a.oslab.opentlc.com
 
 # additional cors origins
 #osm_custom_cors_origins=['foo.example.com', 'bar.example.com']
@@ -962,22 +962,22 @@ master3.example.com host_zone=eu-central-1a
 #ose3-node[1:2]-ansible.test.example.com openshift_node_labels="{'region': 'primary', 'zone': 'default'}"
 
 ## These are the masters
-master1.example.com openshift_hostname=master1.example.com ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','openshift_schedulable':'False','cluster': 'a3f5', 'zone': 'eu-central-1a'}"
-master2.example.com openshift_hostname=master2.example.com ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','openshift_schedulable':'False','cluster': 'a3f5', 'zone': 'eu-central-1a'}"
-master3.example.com openshift_hostname=master3.example.com ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','openshift_schedulable':'False','cluster': 'a3f5', 'zone': 'eu-central-1a'}"
+master1.example.com openshift_hostname=master1.example.com ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','openshift_schedulable':'False','cluster': '579a', 'zone': 'eu-central-1a'}"
+master2.example.com openshift_hostname=master2.example.com ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','openshift_schedulable':'False','cluster': '579a', 'zone': 'eu-central-1a'}"
+master3.example.com openshift_hostname=master3.example.com ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','openshift_schedulable':'False','cluster': '579a', 'zone': 'eu-central-1a'}"
 
 ## These are infranodes
-infranode1.example.com openshift_hostname=infranode1.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': 'a3f5', 'env':'infra', 'zone': 'eu-central-1a'}"
-infranode2.example.com openshift_hostname=infranode2.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': 'a3f5', 'env':'infra', 'zone': 'eu-central-1a'}"
-infranode3.example.com openshift_hostname=infranode3.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': 'a3f5', 'env':'infra', 'zone': 'eu-central-1a'}"
+infranode1.example.com openshift_hostname=infranode1.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': '579a', 'env':'infra', 'zone': 'eu-central-1a'}"
+infranode2.example.com openshift_hostname=infranode2.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': '579a', 'env':'infra', 'zone': 'eu-central-1a'}"
+infranode3.example.com openshift_hostname=infranode3.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': '579a', 'env':'infra', 'zone': 'eu-central-1a'}"
 
 ## These are regular nodes
-node1.example.com openshift_hostname=node1.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': 'a3f5', 'env':'app', 'zone': 'eu-central-1a'}"
-node2.example.com openshift_hostname=node2.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': 'a3f5', 'env':'app', 'zone': 'eu-central-1a'}"
-node3.example.com openshift_hostname=node3.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': 'a3f5', 'env':'app', 'zone': 'eu-central-1a'}"
-node4.example.com openshift_hostname=node4.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': 'a3f5', 'env':'app', 'zone': 'eu-central-1a'}"
-node5.example.com openshift_hostname=node5.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': 'a3f5', 'env':'app', 'zone': 'eu-central-1a'}"
+node1.example.com openshift_hostname=node1.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': '579a', 'env':'app', 'zone': 'eu-central-1a'}"
+node2.example.com openshift_hostname=node2.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': '579a', 'env':'app', 'zone': 'eu-central-1a'}"
+node3.example.com openshift_hostname=node3.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': '579a', 'env':'app', 'zone': 'eu-central-1a'}"
+node4.example.com openshift_hostname=node4.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': '579a', 'env':'app', 'zone': 'eu-central-1a'}"
+node5.example.com openshift_hostname=node5.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': '579a', 'env':'app', 'zone': 'eu-central-1a'}"
 
 [nfs]
-#support1.a3f5.internal openshift_hostname=support1.a3f5.internal  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa
-node6.example.com openshift_hostname=node6.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': 'a3f5', 'env':'app', 'zone': 'eu-central-1a'}"
+#support1.579a.internal openshift_hostname=support1.579a.internal  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa
+node6.example.com openshift_hostname=node6.example.com  ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa openshift_node_labels="{'logging':'true','cluster': '579a', 'env':'app', 'zone': 'eu-central-1a'}"

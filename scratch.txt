@@ -1,2 +1,13 @@
+ansible -i bastion.hosts nfs -m blockinfile -a"path='/etc/exports' marker='# {mark} ANSIBLE MANAGED BLOCK' content='/srv/nfs master1.example.com(no_root_squash,rw,sync) master2.example.com(no_root_squash,rw,sync) master3.example.com(no_root_squash,rw,sync) infranode1.example.com(no_root_squash,rw,sync) infranode2.example.com(no_root_squash,rw,sync) node1.example.com(no_root_squash,rw,sync) node2.example.com(no_root_squash,rw,sync) node3.example.com(no_root_squash,rw,sync) node4.example.com(no_root_squash,rw,sync) node5.example.com(no_root_squash,rw,sync) node6.example.com(no_root_squash,rw,sync)'"
+ansible -i bastion.hosts nfs -m blockinfile -a"path='/etc/exports' marker='# {mark} ANSIBLE MANAGED BLOCK' content='/srv/nfs *(no_root_squash,rw,sync)'"
+
+
+
+
+
 sudo -E ssh -L 636:idm.example.com:636 -i ./cvicensa-redhat.com.id_rsa  cvicensa-redhat.com@oselab-a3f5.oslab.opentlc.com -N
+
+
+
+http://nexus-coolstore-infra.cloudapps-a3f5.oslab.opentlc.com
 
